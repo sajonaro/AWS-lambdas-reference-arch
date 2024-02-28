@@ -3,4 +3,4 @@ reference architecture using AWS lambdas and SQS queues based asynchronous event
 
 
 problem statement is 
-[here](./design/Readme.md.md)
+[here](./design/Readme.md)
