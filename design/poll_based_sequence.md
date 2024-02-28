@@ -1,4 +1,6 @@
-::: mermaid
+## Polling based api invocation sequence
+
+```mermaid
 sequenceDiagram
     participant client
     participant API Gateway
@@ -51,16 +53,7 @@ sequenceDiagram
         Inbound webhook handler->>Inbound webhook handler: save status COMPLETE to DB
     end
 
-
-    
-  
-       
-   
-
-
-
-
-:::
+```
 
 
 
