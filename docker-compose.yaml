@@ -1,0 +1,39 @@
+version: '3.5'
+
+networks:
+  receipt-net:
+    driver: bridge
+
+services:
+
+  localstack: 
+    image: localstack/localstack:0.12.9
+    container_name: localstack-container
+    environment:
+      - SERVICES=s3,lambda,apigateway,cloudformation,cloudwatch, dynamodb,sqs,sns,logs
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - PORT_WEB_UI=8080
+      - AWS_DEFAULT_REGION=us-east-1
+      - EDGE_PORT=4566
+    ports:
+      - "4566-4599:4566-4599"
+    networks: 
+      - receipt-net
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+
+  
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui-container
+    ports:
+      - "80:8080"
+    networks: 
+      - receipt-net
+    volumes:
+      - ./design/api-def.yaml://usr/share/nginx/html/api/api-def.yaml
+    environment:
+      URLS: "[{ url: \"api/api-def.yaml\", name: \"receipt API definitions\" }]" 

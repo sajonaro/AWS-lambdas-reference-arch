@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: receipt API
+  description: |-
+    defined using Open API and swagger-editor tool
+  version: 0.0.1
+externalDocs:
+  description: find out more about swagger.io
+  url: http://swagger.io
+servers:
+    # api hosted via local stack
+  - name: receipt-api-local
+    url: http://localhost:8083
+    description: receipt API service
+paths:
+  api/receipt/status/{ticket-id}:
+    description: |
+      get the processing status of receipt by ticket id
+    get:
+      summary: get status of receipt
+      tags:
+        - receipt-status
+      operationId: getReceiptStatus
+      parameters:
+        - name: ticket-id
+          in: path
+          description: receipt ticket id
+          required: true
+          schema:
+            type: string
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Successfully uploaded
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/processing-status'
+  api/receipt/:
+    post:
+      summary: upload receipt for processing
+      tags:
+        - receipt
+      operationId: postReceipt
+      requestBody:
+        description: upload receipt for processing
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/receipt'
+      responses:
+        200:
+          description: Successfully uploaded
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/processing-status'
+
+components:
+  schemas:
+    processing-status:
+      required:
+        - receipt_id
+        - ticket_id
+        - status
+      type: object
+      properties:
+        receipt_id:
+          type: string
+          example: "a737107d-9a83-4c44-b612-ca5b2a5ea6a5"
+        ticket_id:
+          type: string
+          example: "89f876a1-724d-4f77-9383-6d90efb3835a"
+        status:
+          type: string
+          description: processing status
+          example: COMPLETED (or) PROCESSING (or) INVALID
+    receipt:
+      type: object
+      properties:
+        receipt_id:
+          type: string
+          example: "89f876a1-724d-4f77-9383-6d90efb3835a"
+        callbackUrl:   # Callback URL
+          type: string
+          format: uri
+          example: https://myserver.com/send/callback/here  
+        payload:
+          type: string 
+          example: "{ 'a': 'b' , 'c': 'd' , 'e': 'f' }"
