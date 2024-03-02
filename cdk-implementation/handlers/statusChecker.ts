@@ -1,6 +1,6 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 
-export const statusChecker = async (event: APIGatewayEvent ): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayEvent ): Promise<APIGatewayProxyResult> => {
     
    //const payload =  new JSON(event.body)  ;
 

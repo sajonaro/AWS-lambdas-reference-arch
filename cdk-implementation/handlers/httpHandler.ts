@@ -1,7 +1,7 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from "aws-lambda";
 import { v4 as uuidv4 } from 'uuid';
 
-export const httpHandler = async (event: APIGatewayEvent ): Promise<APIGatewayProxyResult> => {
+export const handler = async (event: APIGatewayEvent ): Promise<APIGatewayProxyResult> => {
     
   const guid = uuidv4();
  

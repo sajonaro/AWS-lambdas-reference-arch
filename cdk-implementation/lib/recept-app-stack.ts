@@ -16,9 +16,15 @@ export class ReceiptApiStack extends cdk.Stack {
     
     //register POST method for /receipts
     const httpHandler = new Lambda(this, "httpHandler");
-    api.addIntegration("POST", "/api/receipt", httpHandler);
+    api.addIntegration("POST", "/receipt", httpHandler);
 
     //register status checker (GET method for /status)
     const statusChecker = new Lambda(this, "statusChecker");
-    api.addIntegration("GET", "/api/receipt/status/{ticket-id}", httpHandler);
+    api.addIntegration("GET", "/status/{ticket-id}", statusChecker);
+
+    const healthCheck = new Lambda(this, "healthChecker");
+    api.addIntegration("GET", "/health", healthCheck);
+
+
+
 }}

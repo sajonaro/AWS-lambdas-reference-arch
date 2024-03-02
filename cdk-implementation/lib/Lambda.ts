@@ -10,7 +10,6 @@ export class Lambda extends NodejsFunction {
             architecture: Architecture.X86_64,
             entry: path.join(__dirname,`../handlers/${filename}.ts`),
             logRetention: RetentionDays.ONE_WEEK,
-            handler: 'handler',
             bundling: {
                 minify: true,
                 sourceMap: true,

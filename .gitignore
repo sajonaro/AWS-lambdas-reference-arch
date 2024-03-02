@@ -1,2 +1,5 @@
 *.pdf
 node_modules
+*.gz
+.env
+configure_aws_profile.sh

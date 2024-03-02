@@ -10,10 +10,12 @@ externalDocs:
 servers:
     # api hosted via local stack
   - name: receipt-api-local
-    url: http://localhost:8083
+    # URL of API gateway
+    # TODO: use BASE url technique to avoid hardcoding the URL
+    url: https://zxvbpia2xa.execute-api.localhost.localstack.cloud:4566/prod/
     description: receipt API service
 paths:
-  api/receipt/status/{ticket-id}:
+  api/receipt/status/{ticket-id}/:
     description: |
       get the processing status of receipt by ticket id
     get:

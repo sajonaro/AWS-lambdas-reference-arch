@@ -6,11 +6,10 @@ import { Construct } from "constructs";
 export class ApiGateway extends RestApi {
     constructor(scope: Construct) {
         super(scope, "ApiGateway", {
-            restApiName: "receiptApi",
-            description: "API to validate and manage receits",
+            restApiName: "receipt-api",
             deployOptions: {
                 accessLogDestination: new LogGroupLogDestination(new LogGroup(scope,"ApiLogGroup",{
-                    logGroupName: "/receipts-api",
+                    logGroupName: "receipts-api",
                     retention: RetentionDays.ONE_WEEK,
                     removalPolicy: RemovalPolicy.DESTROY
                 }))
