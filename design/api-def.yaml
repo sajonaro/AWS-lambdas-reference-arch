@@ -34,7 +34,7 @@ paths:
         - application/json
       responses:
         200:
-          description: Successfully uploaded
+          description: processing status is returned
           content:
             application/json:
               schema:
@@ -46,7 +46,7 @@ paths:
         - receipt
       operationId: postReceipt
       requestBody:
-        description: upload receipt for processing
+        description: receipt value for processing
         content:
           application/json:
             schema:
@@ -64,20 +64,24 @@ components:
     processing-status:
       required:
         - receipt_id
-        - ticket_id
         - status
       type: object
       properties:
         receipt_id:
           type: string
           example: "a737107d-9a83-4c44-b612-ca5b2a5ea6a5"
-        ticket_id:
-          type: string
-          example: "89f876a1-724d-4f77-9383-6d90efb3835a"
         status:
           type: string
           description: processing status
           example: COMPLETED (or) PROCESSING (or) INVALID
+        error_message:
+          type: string
+          description: error message (if applicable) 
+          example: invalid IBAN  
+        metadata:
+          type: string
+          description: additional information from downstream components 
+          example: transaction id 234234234   
     receipt:
       type: object
       properties:
