@@ -96,14 +96,22 @@ Component diagram:
 | warehouse API external service| external API | webhook callback pattern is assumed| 
 | tax API external service |  external API | webhook callback pattern is assumed| 
 | PROCESSING state handler Lambda | labda handler updatinf current state for valid receipts | | 
-| DynamoDB database | is used as "fast" DB, if partioned properly, it will allow concurrent read/write access by 1000 users per second <br> *  partition key is - client_id <br> * (compound) sort key is  DATE#receipt_id (buisness days are used) <br> * GSI (global secondary index) is set to DATE, to allow easily archive records older than 30 days| to allow pagination in data access api: <br> * Limit (query page size) is set to 10K <br> * LastEvaluatedKey's value is used as input/output parameter <br> <br> Adittionaly, streaming feature is used to: <br> * archive receipts older than 30 days in s3 <br> * ingest receipts into redshift DB for analytics | 
+| DynamoDB database | is used as "fast" DB, if partioned properly, it will allow concurrent read/write access by 1000 users per second <br> *  partition key is - receipt id <br> *  sort key is  "processing state", to allow quick check of a receipts current state   <br> * GSI (global secondary index) is set to DATE (buisness days are used), to allow easily archive records older than 30 days| to allow pagination in data access api: <br> * Limit (query page size) is set to 10K <br> * LastEvaluatedKey's value is used as input/output parameter <br> <br> Adittionaly, streaming feature is used to: <br> * archive receipts older than 30 days in s3 <br> * ingest receipts into redshift DB for analytics | 
 | Redshift DB| Is used for building complex analytics | data is ingested using dynamoDB streaming or from S3 via batch jobs etc. visual query editor from Redshift can be used| 
 | S3 archive| Is used to store archived receipts and/or starting point for ingestion into various analitics platforms and service | | 
 | inbound webhook Handler | Lambda function handling POST callbacks from external services | |
 | outbound webhook Handler | Lambda function making callbacks (to customers) in reaction to oubound webhook events in outbound webhook queue|| 
 | outbound webhook queue | SQS queue updated by dynamodb streams (lambda) based on status change of receipts e.g. PROCESSING->FAILED or PROCESSING->COMPLETE|| 
 ---
+<br>
 
+Dynamodb table design details:  
+---
+| Entity | Partition Key | Sort Key                         | GSI      |  Attribute: details |
+| -------| ----------- | --------------------------------------|---------------|---------------------| 
+| Receipt| receipt_id | state can be: <br>   "PROCESSING" or <br> "FAILED" or <br> "COMPLETED"    |  Date   | { "state":   "PROCESSING" or"FAILED" or "COMPLETED" <br> "payload": "content", <br> "receipt_id": GUID <br> "transaction_date": "date" <br> etc... } |       
+
+<br><br>
 
 Detailed sequence of actions (e.g. for polling based method) can be found on [this sequence diagram](poll_based_sequence.md)
 
