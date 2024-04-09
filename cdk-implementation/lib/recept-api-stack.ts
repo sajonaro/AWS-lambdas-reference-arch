@@ -26,8 +26,6 @@ export class ReceiptApiStack extends cdk.Stack {
     // API Gateway
     const api = new ApiGateway(this);
 
-    // API Gateway
-    
     //register POST method for /receipts
     const httpHandler = new Lambda(this, "httpHandler",fullAccessPolicies);
     api.addIntegration("POST", "/receipt", httpHandler);
