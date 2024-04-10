@@ -128,12 +128,7 @@ DR account account can be used for blue/green deployment pattern
 
 
 
-### Ommited concerns   (TODOS)
-- Multitenancy
-- Analytics platforms details (options)
-- integration with specific IDPs and Authorization details
-- options how to provide/configure (new) receipt validation algorithms ( to support more types of receipts etc. )
-- billing and financial transactions with 3-rd party services
+
 
 
 ### Cost estimates
@@ -148,3 +143,12 @@ DR account account can be used for blue/green deployment pattern
 | API gateway | REST API request units (millions), Cache memory size (GB) (None), WebSocket message units (thousands), HTTP API requests units (millions), Average size of each request (34 KB), Requests (10 per month), Average message size (32 KB) | 10.00 USD |
 ||| | 4,570.08 USD|
 
+
+
+### Ommited concerns   (TODOS)
+- Multitenancy
+- Analytics platforms details (options)
+- integration with specific IDPs and Authorization details
+- options how to provide/configure (new) receipt validation algorithms ( to support more types of receipts etc. )
+- billing and financial transactions with 3-rd party services
+- Build use mechanism of layers to deploy/update new logic for receipt validation  
