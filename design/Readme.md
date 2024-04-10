@@ -134,3 +134,17 @@ DR account account can be used for blue/green deployment pattern
 - integration with specific IDPs and Authorization details
 - options how to provide/configure (new) receipt validation algorithms ( to support more types of receipts etc. )
 - billing and financial transactions with 3-rd party services
+
+
+### Cost estimates
+#### ( N.B. estimate is calculated for 1 region, us-east-1 )
+| Service  Name | Details | cost per month | total (12 months)|
+| --------------| --------| ---------------|-----------------|
+| DynamoDB | Table class (Standard), Average item size (all attributes) (1 KB), Write reserved capacity term (1 year), Read reserved capacity term (1 year), Data storage size (1000 GB)| 276.14 USD|
+| S3 | S3 Standard storage (1024 GB per month) | 23.55 USD  |
+| AWS lambda | Architecture (x86), Architecture (x86), Invoke Mode (Buffered), Amount of ephemeral storage allocated (512 MB), Number of requests (10000000 per month)| 1.80 USD|
+| Cognito | Number of monthly active users (MAU) (1000), Advanced security features (Enabled)| 50.75 USD|
+| SQS | Standard queue requests (10 million per month) |3.60 USD |
+| API gateway | REST API request units (millions), Cache memory size (GB) (None), WebSocket message units (thousands), HTTP API requests units (millions), Average size of each request (34 KB), Requests (10 per month), Average message size (32 KB) | 10.00 USD |
+||| | 4,570.08 USD|
+
